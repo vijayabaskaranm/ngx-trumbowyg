@@ -8,16 +8,16 @@ import { TRUMBOWYG_OPTIONS } from '../configs/injection-token';
   selector: '[ngxTrumbowygEditor]'
 })
 export class EditorDirective extends EditorBase {
-  @Input() options: TrumbowygOptions | null;
+  @Input() override options!: TrumbowygOptions | null;
 
-  @Input() placeholder: string | null;
+  @Input() override placeholder!: string | null;
 
   constructor(
-    protected editorControl: NgControl,
+    protected override editorControl: NgControl,
     @Inject(TRUMBOWYG_OPTIONS)
     @Optional()
-    protected _config: TrumbowygOptions,
-    protected _editor: ElementRef
+    protected override _config: TrumbowygOptions,
+    protected override _editor: ElementRef
   ) {
     super(editorControl, _config);
   }

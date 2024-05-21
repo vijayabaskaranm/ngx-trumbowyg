@@ -1,13 +1,21 @@
 import { Component, AfterViewInit, OnDestroy } from '@angular/core';
 import { Subscription, of } from 'rxjs';
-import { FormGroup, FormBuilder } from '@angular/forms';
+import { FormGroup, FormBuilder, ReactiveFormsModule, FormsModule } from '@angular/forms';
 import { delay } from 'rxjs/operators';
-import { TrumbowygOptions } from 'ngx-trumbowyg';
+import { JsonPipe } from '@angular/common';
+import { NgxTrumbowygModule, TrumbowygOptions } from 'ngx-trumbowyg';
 
 @Component({
   selector: 'app-root',
+  standalone: true,
   templateUrl: './app.component.html',
-  styleUrls: ['./app.component.scss']
+  styleUrls: ['./app.component.scss'],
+  imports: [
+    ReactiveFormsModule, 
+    FormsModule, 
+    JsonPipe,
+    NgxTrumbowygModule
+  ]
 })
 export class AppComponent implements AfterViewInit, OnDestroy {
   form: FormGroup;
@@ -18,9 +26,9 @@ export class AppComponent implements AfterViewInit, OnDestroy {
 
   modelWithContent = 'fooBar';
 
-  lazyContent: string;
+  lazyContent!: string;
 
-  private _sub: Subscription;
+  private _sub!: Subscription;
 
   constructor(private _fb: FormBuilder) {
     this.options = { lang: 'en' };
@@ -43,10 +51,12 @@ export class AppComponent implements AfterViewInit, OnDestroy {
 
   toggleDisabled(): void {
     const control = this.form.get('foo');
-    if (control.disabled) {
-      control.enable();
-    } else {
-      control.disable();
+    if (control) {
+      if (control.disabled) {
+        control.enable();
+      } else {
+        control.disable();
+      }
     }
   }
 }

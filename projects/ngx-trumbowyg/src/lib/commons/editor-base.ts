@@ -1,25 +1,26 @@
-import { AfterViewInit, ElementRef, OnDestroy, OnInit } from '@angular/core';
+import { AfterViewInit, Directive, ElementRef, Inject, OnDestroy, OnInit } from '@angular/core';
 import { ControlValueAccessor, NgControl } from '@angular/forms';
+import { TRUMBOWYG_OPTIONS } from '../configs/injection-token';
 import { TrumbowygOptions } from '../configs/trumbowyg-options';
 
 declare const $: any;
-
+@Directive()
 export abstract class EditorBase implements ControlValueAccessor, OnInit, AfterViewInit, OnDestroy {
-  options: TrumbowygOptions | null;
+  options!: TrumbowygOptions | null;
 
-  placeholder: string | null;
+  placeholder!: string | null;
 
-  protected _editor: ElementRef;
+  protected _editor!: ElementRef;
 
-  protected _initValue: string;
+  protected _initValue!: string;
 
-  private _disabled: boolean;
+  private _disabled!: boolean;
 
-  private _onChange: (value: string) => void;
+  private _onChange!: (value: string) => void;
 
-  private _onTouch: () => void;
+  private _onTouch!: () => void;
 
-  constructor(protected editorControl: NgControl, protected _config: TrumbowygOptions) {
+  constructor(protected editorControl: NgControl, @Inject(TRUMBOWYG_OPTIONS) protected _config: TrumbowygOptions) {
     if (
       _config &&
       _config.events &&
@@ -33,9 +34,10 @@ export abstract class EditorBase implements ControlValueAccessor, OnInit, AfterV
   }
 
   ngOnInit(): void {
-    const control = this.editorControl.control;
-    control.setValidators(control.validator);
-    control.updateValueAndValidity();
+    // @ts-ignore: Object is possibly 'null'.
+    const control = this.editorControl?.control;
+    control?.setValidators(control.validator);
+    control?.updateValueAndValidity();
   }
 
   ngAfterViewInit(): void {

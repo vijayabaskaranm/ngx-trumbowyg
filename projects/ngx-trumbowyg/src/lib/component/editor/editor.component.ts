@@ -19,17 +19,17 @@ import { TrumbowygOptions } from '../../configs/trumbowyg-options';
   styleUrls: ['./editor.component.css']
 })
 export class EditorComponent extends EditorBase {
-  @Input() options: TrumbowygOptions | null;
+  @Input() override options!: TrumbowygOptions | null;
 
-  @Input() placeholder: string | null;
+  @Input() override placeholder!: string | null;
 
-  @ViewChild('editor') _editor: ElementRef;
+  @ViewChild('editor') override _editor!: ElementRef;
 
   constructor(
-    protected editorControl: NgControl,
+    protected override editorControl: NgControl,
     @Inject(TRUMBOWYG_OPTIONS)
     @Optional()
-    protected _config: TrumbowygOptions
+    protected override _config: TrumbowygOptions
   ) {
     super(editorControl, _config);
   }

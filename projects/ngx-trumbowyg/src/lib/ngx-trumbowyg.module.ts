@@ -9,7 +9,7 @@ import { EditorComponent } from './component/editor/editor.component';
   exports: [EditorDirective, EditorComponent]
 })
 export class NgxTrumbowygModule {
-  static withConfig(options: TrumbowygOptions): ModuleWithProviders {
+  static withConfig(options: TrumbowygOptions): ModuleWithProviders<NgxTrumbowygModule> {
     return {
       ngModule: NgxTrumbowygModule,
       providers: [{ provide: TRUMBOWYG_OPTIONS, useValue: options }]
